@@ -1,0 +1,23 @@
+This System has Two Proccess:
+1) Billing
+2) Receipt
+
+We have 5 Entities In The System 
+
+1)Product (Every product is given a product_id to avoid ambiguity!)
+    they are stored in a file based system with there fixed prices and discount in perrcentage
+2)Quantity (Quantity is entered in the billing proccess)
+3)Price (Price Of the product are fixed will be made modifiable in the future version)
+4)Discounts (Discount for the product are fixed will be made modifiable in the future version, Can be opted by the user if needed)
+5)Tax (Taxes are fixed)
+
+Console Application (Intractive Mode)
+1)Welcome Message with Instructions.
+  Instructions 
+    1)bill mode
+        selecting products,entering quantity,opting for taxes and discount.
+        the Receipt is printed in a text file.
+    2)product mode
+        Adding the product to the file system with a product_id, price, Discount.
+        in future update we will be upgrading the system by which the user can edit the price, taxes and discount of the product.
+       
