@@ -12,8 +12,6 @@ We have 5 Entities In The System
 5)Tax (Taxes are fixed)
 
 Console Application (Intractive Mode)
-1)Welcome Message with Instructions.
-  Instructions 
     1)bill mode
         selecting products,entering quantity,opting for taxes and discount.
         the Receipt is printed in a text file.
@@ -21,3 +19,10 @@ Console Application (Intractive Mode)
         Adding the product to the file system with a product_id, price, Discount.
         in future update we will be upgrading the system by which the user can edit the price, taxes and discount of the product.
        
+Classes:
+    Messages Class:
+            Has All the intraction messages.
+    Arithmetic Class:
+            All Arithmetic Calculation Functions.
+    BillSystem:
+            Contains Methords to print the bill in a file.
