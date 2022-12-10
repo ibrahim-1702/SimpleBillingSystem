@@ -20,9 +20,9 @@ Console Application (Intractive Mode)
         in future update we will be upgrading the system by which the user can edit the price, taxes and discount of the product.
        
 Classes:
-    Messages Class:
-            Has All the intraction messages.
-    Arithmetic Class:
-            All Arithmetic Calculation Functions.
-    BillSystem:
-            Contains Methords to print the bill in a file.
+    Product Class:
+        Non Static Class, Contains All the entities and Methods related to the product.
+        Methods On Storing The Product details in file system.
+    Bill Class:
+        Contains method to fetch product details which are added in the bill, Arithmetic Operations over product with there quatity.
+        Method On Saving The Bill In a Text File.
