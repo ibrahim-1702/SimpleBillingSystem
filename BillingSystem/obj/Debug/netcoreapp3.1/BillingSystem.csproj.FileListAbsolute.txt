@@ -1,0 +1,14 @@
+C:\Users\msibr\source\repos\BillingSystem\obj\Debug\netcoreapp3.1\BillingSystem.csproj.AssemblyReference.cache
+C:\Users\msibr\source\repos\BillingSystem\obj\Debug\netcoreapp3.1\BillingSystem.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\msibr\source\repos\BillingSystem\obj\Debug\netcoreapp3.1\BillingSystem.AssemblyInfoInputs.cache
+C:\Users\msibr\source\repos\BillingSystem\obj\Debug\netcoreapp3.1\BillingSystem.AssemblyInfo.cs
+C:\Users\msibr\source\repos\BillingSystem\obj\Debug\netcoreapp3.1\BillingSystem.csproj.CoreCompileInputs.cache
+C:\Users\msibr\source\repos\BillingSystem\bin\Debug\netcoreapp3.1\BillingSystem.exe
+C:\Users\msibr\source\repos\BillingSystem\bin\Debug\netcoreapp3.1\BillingSystem.deps.json
+C:\Users\msibr\source\repos\BillingSystem\bin\Debug\netcoreapp3.1\BillingSystem.runtimeconfig.json
+C:\Users\msibr\source\repos\BillingSystem\bin\Debug\netcoreapp3.1\BillingSystem.runtimeconfig.dev.json
+C:\Users\msibr\source\repos\BillingSystem\bin\Debug\netcoreapp3.1\BillingSystem.dll
+C:\Users\msibr\source\repos\BillingSystem\bin\Debug\netcoreapp3.1\BillingSystem.pdb
+C:\Users\msibr\source\repos\BillingSystem\obj\Debug\netcoreapp3.1\BillingSystem.dll
+C:\Users\msibr\source\repos\BillingSystem\obj\Debug\netcoreapp3.1\BillingSystem.pdb
+C:\Users\msibr\source\repos\BillingSystem\obj\Debug\netcoreapp3.1\BillingSystem.genruntimeconfig.cache

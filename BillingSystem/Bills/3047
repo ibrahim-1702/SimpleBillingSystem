@@ -1,0 +1,15 @@
+ProductId	ProductName	Qty	Cost
+Prod1332	Ice Cream	5	500
+
+Prod1919	Chips	4	80
+
+Prod8811	Biscuit	8	120
+
+
+Total: 700
+
+Total Tax Amount: 12
+
+Total Discount Amount: 31
+
+Total NetPayable: 681
