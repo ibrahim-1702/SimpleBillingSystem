@@ -1,79 +1,82 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-
-namespace BillingSystem
+namespace SimpleBillingSystem
 {
-    public static class Bill
+    public class Bill
     {
-        public static int NumberOfProducts;
-        private static int[] Quatities;
-        private static double[] PriceTot;
-        private static double TaxTot = 0, DiscountTot = 0, Total;
-        public static string[] selectProduct() 
+        
+        public List<BillItem> BillItems = new List<BillItem>();
+
+        private double totalTax;
+        private double total;
+
+        public double TotalTax
         {
-            string input;
-            string[] products = new string[NumberOfProducts];
-            Quatities = new int[NumberOfProducts];
-            for(int i = 0; i < NumberOfProducts; i++) 
-            {
-                Console.WriteLine("Enter The ProductId:(if want to exit press 'E')");
-                input = Console.ReadLine();
-                if (input == "E" || input == "Exit") 
-                {
-                    break;
-                }
-                Console.WriteLine("Enter The Product Qty");
-                Quatities[i] = Convert.ToInt32(Console.ReadLine());
-                products[i] = input;
-            }
-            return products;
+            get { return totalTax; }
+            set { totalTax += value; }
+        }
+        public double Total 
+        {
+            get { return total; }
+            set { total += value; }
+        }
+        
+        
+        public static Bill ScanProduct(string ProductID, int qty, Bill bill)
+        {
+            BillItem item = new BillItem(Product.Products[ProductID], qty);
+            bill.BillItems.Add(item);
+ 
+            return bill;
         }
 
-        public static Product[] fetchProds(string[] productIds) 
+        public Bill Calculate(Bill bill) 
         {
-            Product[] products = new Product[productIds.Length];
-            string Path = @"C:\BillingSystem\Products\";
-            string[] ProdDetails = new string[productIds.Length];
-            int i = 0;
-            foreach (string Id in productIds)
+            double totalForOneItem;
+            double taxCostPerUnit;
+
+            foreach (BillItem item in bill.BillItems)
             {
-                ProdDetails = Convert.ToString(File.ReadAllText(Path+Id)).Split(",");
-                products[i] = new Product(ProdDetails[0], ProdDetails[1], ProdDetails[2], ProdDetails[3], ProdDetails[4]);
-                i++;
+                bill.Total = item.Cost;
+                totalForOneItem = (item.Product.Price * item.Qty);
+                taxCostPerUnit = (item.Product.TaxPerQty / 100);
+                bill.totalTax =  taxCostPerUnit* totalForOneItem;
             }
-            return products;
+            return bill;
         }
 
-        public static void Billing(Product[] products) 
+        public void SaveBills(string path,Bill bill) 
         {
-            int NumberOfBills = Convert.ToInt32(File.ReadAllText(@"C:\BillingSystem\NumberOfBills.txt"));
+            string todaysDate = DateTime.Today.ToString("d");
+            string currentTime = DateTime.Now.ToString("h l m l s"); //Using The Current Time To Name The Text File separated with the letter l
+            string folder = path+"\\"+todaysDate;
+            string textFile = folder+"\\" + currentTime+".txt"; //Concating the folder path with the file name
+            string Contents = "";
 
-            NumberOfBills++;
-
-            File.WriteAllText(@"C:\BillingSystem\NumberOfBills.txt", Convert.ToString(NumberOfBills));
-
-            string Path = @"C:\BillingSystem\Bills\";
-            StreamWriter BillPrinter = new StreamWriter(Path + "Bill-" + NumberOfBills);
-            PriceTot = new double[products.Length];
-            BillPrinter.WriteLine("ProductId\tProductName\tQty\tCost");
-            for (int i = 0; i < products.Length; i++)
+            if (!Directory.Exists(folder))
             {
-                PriceTot[i] = Convert.ToDouble(products[i].ProductPrice) * Quatities[i];
-                TaxTot += (Convert.ToDouble(products[i].ProductTax) / 100) * PriceTot[i];
-                DiscountTot += (Convert.ToDouble(products[i].ProductDiscount) / 100) * PriceTot[i];
-                Total += PriceTot[i];
-
-                BillPrinter.WriteLine(products[i].ProductId + "\t" + products[i].ProductName + "\t" + Quatities[i] + "\t" + PriceTot[i] + "\n");
+                Directory.CreateDirectory(folder);
             }
-
-            BillPrinter.WriteLine("\nTotal: " + Total);
-            BillPrinter.WriteLine("\nTotal Tax Amount: "+TaxTot);
-            BillPrinter.WriteLine("\nTotal Discount Amount: " + DiscountTot);
-            Total -= DiscountTot;
-            Total += TaxTot;
-            BillPrinter.WriteLine("\nTotal NetPayable: " + Total);
-            BillPrinter.Close();
+            StreamWriter writer = File.CreateText(textFile);
+            foreach (BillItem item in bill.BillItems)
+            {
+                Contents += item.ToString();
+                Contents += "\n";
+            }
+            Contents += bill.TotalTax+"\n";
+            Contents += bill.Total;
+            writer.Write(Contents);
+            writer.Close();
         }
+
+        public string[] GetTheBill(string FilePath)
+        {
+            string[] Contents;
+            Contents = File.ReadAllText(FilePath).Split('\n');
+            return Contents;
+        }
+
+
     }
 }

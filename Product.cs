@@ -2,75 +2,84 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-namespace BillingSystem
+namespace SimpleBillingSystem
 {
+
+
     public class Product
     {
 
-        public static string ProductPath = @"C:\BillingSystem\Products\";
-        public string ProductId;
-        public string ProductName;
-        public string ProductPrice;
-        public string ProductDiscount;
-        public string ProductTax;
+        public static Dictionary<string, Product> Products = new Dictionary<string, Product>();
+
         public Product() { }
-        public Product(string productId, string productName, string productPrice, string productDiscount, string productTax)
-        {
-            ProductId = productId;
-            ProductName = productName;
-            ProductPrice = productPrice;
-            ProductDiscount = productDiscount;
-            ProductTax = productTax;
-        }
-            public static Product GetProductDetails(Product product)
-        {
-
-            Console.WriteLine("Enter The Product Name: ");
-            product.ProductName = Convert.ToString(Console.ReadLine());
-
-            Console.WriteLine("Enter Price: ");
-            product.ProductPrice = Convert.ToString(Console.ReadLine());
-
-            Console.WriteLine("Enter Discounts: ");
-            product.ProductDiscount = Convert.ToString(Console.ReadLine());
-
-            Console.WriteLine("Enter Taxes: ");
-            product.ProductTax = Convert.ToString(Console.ReadLine());
-
-            return product;
-        }
-        public static void SaveProduct(Product temp) 
-        {
-            int NumberOfProducts = Convert.ToInt32(File.ReadAllText(@"C:\BillingSystem\NumberOfProducts.txt"));
-
-            NumberOfProducts++;
-
-            File.WriteAllText(@"C:\BillingSystem\NumberOfProducts.txt", Convert.ToString(NumberOfProducts));
-
-            temp.ProductId += temp.ProductName[0];
-            temp.ProductId += temp.ProductName[1];
-            temp.ProductId += temp.ProductName[2];
-            temp.ProductId += temp.ProductName[3];
-
-            temp.ProductId += "-" + NumberOfProducts;
-
-            FileStream fs = File.Create(ProductPath+temp.ProductId);
-            fs.Close();
-
-            StreamWriter writer = new StreamWriter(ProductPath+temp.ProductId);
-            writer.WriteLine(temp.ProductId+','+temp.ProductName+','+temp.ProductPrice+','+ temp.ProductDiscount + ','+ temp.ProductTax);
-            writer.Close();
-        }
+        private string productID;
+        private string productName;
+        private double price;
+        private double taxPerQty;
+        private double discountPerQty;
 
         
-        public static void ProductMode()
+
+        public string ProductID 
         {
-            Console.WriteLine("What to enter a new product (y/n)?");
-            char YorNo = Convert.ToChar(Console.ReadLine());
-            if (YorNo == 'y' || YorNo == 'Y')
+            get { return productID; }
+            set { productID = value; }
+        }
+
+        public string ProductName
+        {
+            get { return productName; }
+            set { productName = value; }
+        }
+
+        public double Price
+        {
+            get { return price; }
+            set { price = value; }
+        }
+
+        public double TaxPerQty
+        {
+            get { return taxPerQty; }
+            set { taxPerQty = value; }
+        }
+
+        public double DiscountPerQty
+        {
+            get { return discountPerQty; }
+            set { discountPerQty = value; }
+        }
+        public Product(string ProductID, string ProductName,int Cost, int TaxPerQty, int DiscountPerQty) 
+        {
+            this.ProductID = ProductID;
+            this.ProductName = ProductName;
+            Price = Cost;
+            this.TaxPerQty = TaxPerQty;
+            this.DiscountPerQty = DiscountPerQty;
+        }
+
+
+        public static void fetchAllProds(string path) 
+        {
+            string[] ProdArr;
+            ProdArr = File.ReadAllLines(path);
+            Products.Clear();
+            int NumberOfProducts = ProdArr.Length;
+            
+            for (int i = 0; i < NumberOfProducts; i++) 
             {
-                Console.WriteLine("");
+                Product product = new Product(ProdArr[i].Split('|')[0], ProdArr[i].Split('|')[1], int.Parse(ProdArr[i].Split('|')[2]), int.Parse(ProdArr[i].Split('|')[3]), int.Parse(ProdArr[i].Split('|')[4]));
+                Products.Add(ProdArr[i].Split('|')[0], product);
             }
         }
+
+        public void AddProd(string path) 
+        {
+            TextWriter Pen = new StreamWriter(path, true);
+            string ProductProperties = productID + '|' + productName + '|' + price+ '|' + taxPerQty + '|' + discountPerQty;
+            Pen.WriteLine(ProductProperties);
+            Pen.Close();
+        }
+
     }
 }

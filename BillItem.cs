@@ -10,9 +10,7 @@ namespace SimpleBillingSystem
     public class BillItem
     {
         private Product product;
-
-        private int Qty;
-        private double PerUnitCost;
+        private int qty;
         private double cost;
 
         public Product Product 
@@ -25,18 +23,20 @@ namespace SimpleBillingSystem
             get { return cost; }
         }
 
+        public int Qty {
+            get { return qty; }
+        }
+
         public BillItem(Product ScanedProduct,int QtyOfTheProduct) 
         {
             product = ScanedProduct;
-            
-            Qty = QtyOfTheProduct;
-            PerUnitCost = ScanedProduct.Price;
-            cost = PerUnitCost * Qty;
+            qty = QtyOfTheProduct;
+            cost = product.Price * Qty;
         }
 
         public override string ToString()
         {
-            return product.ProductID + "\t\t" + product.ProductName + "\t\t" + Qty + "\t" + PerUnitCost + "\t\t" + Cost;
+            return product.ProductID + "\t\t" + product.ProductName + "\t\t" + Qty + "\t" + product.Price + "\t\t" + Cost;
         }
 
     }
